@@ -96,25 +96,20 @@
             position: relative;
         }
 
-      .dropdown-toggle::after {
-      /* Añade estas propiedades para posicionar el ícono */
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 0.75rem;
-      transform: translateY(-50%);
-      width: 0.5rem;
-      height: 0.5rem;
-      border-top: 0.2rem solid currentColor;
-      border-right: 0.2rem solid currentColor;
-      transition: transform 0.3s ease;
-      }
+        .dropdown-toggle:hover:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -14px;
+            width: 100%;
+            height: 5px;
+            background-color: red;
+        }
 
-      .dropdown-toggle[aria-expanded="true"]::after {
-      /* Agrega esta regla para mover el ícono hacia arriba cuando el menú desplegable se abra */
-      transform: translateY(-50%) rotate(-135deg);
-      }
-
+        .dropdown-toggle:hover {
+            background-color: transparent !important;
+            color: red !important;
+        }
     </style>
 </head>
 
@@ -151,7 +146,8 @@
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Guitarras
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="guitarrasDropdown" style="top: 25px;">
+                            <ul class="dropdown-menu" aria-labelledby="guitarrasDropdown" style="top: 30px;"
+                                onmouseover="this.style.display='block'" onmouseout="this.style.display='none'">
                                 <li><a class="dropdown-item" href="#">Guitarra eléctrica</a></li>
                                 <li><a class="dropdown-item" href="#">Guitarra acústica</a></li>
                                 <li><a class="dropdown-item" href="#">Guitarra clásica</a></li>
@@ -162,7 +158,8 @@
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Tambores
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="tamboresDropdown" style="top: 25px;">
+                            <ul class="dropdown-menu" aria-labelledby="tamboresDropdown" style="top: 25px;"
+                                onmouseover="this.style.display='block'" onmouseout="this.style.display='none'">
                                 <li><a class="dropdown-item" href="#">Batería</a></li>
                                 <li><a class="dropdown-item" href="#">Cajón</a></li>
                                 <li><a class="dropdown-item" href="#">Timbales</a></li>
@@ -173,7 +170,8 @@
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Bajos
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="bajosDropdown" style="top: 25px;">
+                            <ul class="dropdown-menu" aria-labelledby="bajosDropdown" style="top: 25px;"
+                                onmouseover="this.style.display='block'" onmouseout="this.style.display='none'">
                                 <li><a class="dropdown-item" href="#">Bajo eléctrico</a></li>
                                 <li><a class="dropdown-item" href="#">Bajo acústico</a></li>
                                 <li><a class="dropdown-item" href="#">Bajo fretless</a></li>
@@ -182,13 +180,42 @@
                     </ul>
                 </div>
             </div>
+        </div>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+    <script>
+        var dropdowns = document.querySelectorAll('.dropdown');
+
+        // Cerrar el menú desplegable al salir del cuadro
+        function closeDropdowns() {
+            dropdowns.forEach(function (dropdown) {
+                dropdown.querySelector('.dropdown-menu').style.display = 'none';
+            });
+        }
+
+        // Mostrar el menú desplegable al pasar sobre el enlace
+        dropdowns.forEach(function (dropdown) {
+            dropdown.addEventListener('mouseover', function () {
+                this.querySelector('.dropdown-menu').style.display = 'block';
+            });
+
+            dropdown.addEventListener('mouseout', function (e) {
+                if (!dropdown.contains(e.toElement)) {
+                    this.querySelector('.dropdown-menu').style.display = 'none';
+                }
+            });
+        });
+
+        // Cerrar los menús desplegables al hacer clic fuera de ellos
+        document.addEventListener('click', function (e) {
+            if (!dropdowns[0].contains(e.target)) {
+                closeDropdowns();
+            }
+        });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-cNvTiJBBKHyPPmCO6C31ovZ86MoWc6WlDLmBn0l9vTqA9cIZJu17vE+swxZcZ5z8" crossorigin="anonymous">
     </script>
 </body>
 
